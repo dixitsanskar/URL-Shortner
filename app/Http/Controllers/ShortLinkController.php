@@ -10,19 +10,27 @@ class ShortLinkController extends Controller
 {
     //
     public function index(){
-        $shortLink = ShortLink::latest()->get();
+        $shortLink = ShortLink::all();
         return view('shortenlink', compact('shortLink'));
     }
 
     public function store( Request $request){
 
+        $link = new ShortLink;
+
+        // $request->validate([
+        //     'link'=> 'required|url'
+        // ]);
+        // $input['link'] = $request->link;
+        // $input['code'] = Str::random(6);
         $request->validate([
             'link'=> 'required|url'
         ]);
-        $input['link'] = $request->link;
-        $input['code'] = Str::random(6);
+        $link->link = $request->link;
+        $link->code = Str::random(6);
 
-        ShortLink::create($input);
+        // ShortLink::create($input);
+        $link->save();
 
         return redirect('generate-shorten-link')->withSuccess('Shorten Link Generated Successfull') ;
 
@@ -30,7 +38,7 @@ class ShortLinkController extends Controller
 
     public function shortenLink($code){
         
-        $find = ShortLink::where('code', $code)->first();
+        $find = ShortLink::where('code','=', $code)->first();
         return redirect($find->link);
     }
 }
