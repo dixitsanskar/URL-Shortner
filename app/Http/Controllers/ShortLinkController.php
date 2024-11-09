@@ -10,7 +10,7 @@ class ShortLinkController extends Controller
 {
     //
     public function index(){
-        $shortLink = ShortLink::latest()->get();
+        $shortLink = ShortLink::latest()->limit(20)->get();
         return view('shortenlink', compact('shortLink'));
     }
 
