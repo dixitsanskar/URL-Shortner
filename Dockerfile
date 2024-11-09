@@ -28,6 +28,8 @@ RUN apk update && \
 
 # Add MongoDB extension to php.ini
 RUN echo "extension=mongodb.so" >> /usr/local/etc/php/conf.d/mongodb.ini
+RUN echo "memory_limit = 512M" >> /usr/local/etc/php/conf.d/memory-limit.ini
+
 
 # Expose port 80 for Nginx
 EXPOSE 80
